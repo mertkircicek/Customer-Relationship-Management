@@ -1,0 +1,35 @@
+﻿@using System.Net.Http
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.JSInterop
+@using CRM_Project
+@using CRM_Project.Client
+@using CRM_Project.Components
+@using CRM_Project.Shared.Models
+@using CRM_Project.Shared.Services
+@using Radzen
+@using Radzen.Blazor
+@using Microsoft.EntityFrameworkCore
+
+
+
+
+
+@inject NavigationManager NavigationManager
+@inject IMusteriService MusteriService
+@inject ContextMenuService ContextMenuService
+@inject DialogService DialogService
+@inject IUlkeService UlkeService
+@inject ISehirService SehirService
+@inject IIlceService IlceService
+@inject IMusteriTemsilciService MusteriTemsilciService
+@inject IGorusmeService GorusmeService
+
+
+@inject ThemeService ThemeService
+

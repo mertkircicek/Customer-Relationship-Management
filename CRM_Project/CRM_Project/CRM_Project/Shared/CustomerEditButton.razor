@@ -1,0 +1,15 @@
+﻿@inject NavigationManager NavigationManager
+
+
+
+ <RadzenButton Text="Müşteri İşlemler" Click="NavigateToOperations" ></RadzenButton>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    void NavigateToOperations()
+    {
+        NavigationManager.NavigateTo($"/edit-musteri");
+    }
+}

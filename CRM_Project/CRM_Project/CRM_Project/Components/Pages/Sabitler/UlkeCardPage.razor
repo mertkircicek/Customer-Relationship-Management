@@ -1,0 +1,110 @@
+﻿<div class="card p-4">
+	<h4>Yeni Ülke Ekle</h4>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="Ülke Adı:" Component="Ad" />
+			<RadzenTextBox @bind-Value="ItemData.Ad" Name="Ad" Placeholder="Ülke Adı" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Ülke Kodu: " Component="Kod" />
+			<RadzenTextBox @bind-Value="ItemData.Kod" Name="Kod" Placeholder="Ülke Kodu" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="Ülke Alan Kodu:" Component="AlanKod" />
+			<RadzenTextBox @bind-Value="ItemData.AlanKod" Name="AlanKod" Placeholder="Alan Kodu" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+	</div>
+	<div style="display:flex;">
+		<div class="text-center mt-4">
+			<div class="button-container">
+				@if (LookData == false)
+				{
+					<RadzenButton Text="KAYDET" ButtonStyle="ButtonStyle.Primary" Icon="add_circle" Click="AddCountry" style="background-color: #28a745; border-color: #28a745;" />
+					<RadzenButton Text="VAZGEÇ" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelCountry" style="background-color: #dc3545; border-color: #dc3545;" />
+
+				}
+				else
+				{
+					<RadzenButton Text="KAPAT" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelCountry" style="background-color: #dc3545; border-color: #dc3545;" />
+				}
+			</div>
+		</div>
+
+
+
+	</div>
+</div>
+
+
+
+@code {
+	[Parameter]
+	public Ulke ItemData { get; set; } = new();
+
+	[Parameter]
+	public bool LookData { get; set; } = false;
+
+
+
+	private async Task AddCountry()
+	{
+		if (IsCountryValid(ItemData))
+		{
+			if (ItemData.Id == 0)
+			{
+				ItemData = await UlkeService.AddCountry(ItemData);
+			}
+			else if (ItemData.Id > 0)
+			{
+				ItemData = await UlkeService.UpdateCountry(ItemData.Id, ItemData);
+
+			}
+
+
+
+
+			DialogService.Close(ItemData);
+		}
+		else
+		{
+
+			await DialogService.Alert("Geçersiz ülke bilgileri", "Hata");
+		}
+
+
+	}
+
+
+	private async Task ViewCountry()
+	{
+		DialogService.Close(LookData);
+	}
+
+
+
+	private async Task CancelCountry()
+	{
+
+		DialogService.Close();
+
+
+	}
+
+	private bool IsCountryValid(Ulke ulke)
+	{
+		return !string.IsNullOrEmpty(ulke.Ad) &&
+						!string.IsNullOrEmpty(ulke.Kod) &&
+						!string.IsNullOrEmpty(ulke.AlanKod);
+
+	}
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		await base.OnInitializedAsync();
+
+
+	}
+}

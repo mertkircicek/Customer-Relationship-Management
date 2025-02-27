@@ -1,0 +1,175 @@
+﻿<div class="card p-4">
+	<h4>Yeni Müşteri Ekle</h4>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="Ad:" Component="Ad" />
+			<RadzenTextBox @bind-Value="ItemData.Ad" Name="Ad" Placeholder="Ad" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Email:" Component="Email" />
+			<RadzenTextBox @bind-Value="ItemData.Email" Name="Email" Placeholder="Email" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Telefon No:" Component="TelNo" />
+			<RadzenMask Mask=" *(***) ***-**-**" CharacterPattern="[0-9]" Placeholder="0(000) 000-00-00" Name="TelNo" @bind-Value=@ItemData.TelNo
+						Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Adres:" Component="Adres" />
+			<RadzenTextBox @bind-Value="ItemData.Adres" Name="Adres" Placeholder="Adres" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Vergi Dairesi:" Component="VergiDairesi" />
+			<RadzenTextBox @bind-Value="ItemData.VergiDairesi" Name="VergiDairesi" Placeholder="Vergi Dairesi" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Vergi No:" Component="VergiNo" />
+			<RadzenTextBox @bind-Value="ItemData.VergiNo" Name="VergiNo" Placeholder="Vergi No" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6 mt-2">
+			<RadzenLabel Text="Ülke Seç:" Component="DropDownTextValueProperties" />
+			<RadzenDropDown TValue="int?" @bind-Value=@ItemData.UlkeId Data=@ulkeList TextProperty="@nameof(Ulke.Ad)" ValueProperty="@nameof(Ulke.Id)" Style="width: 100%; max-width: 400px;" Name="DropDownTextValueProperties" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6 mt-2">
+			<RadzenLabel Text="Şehir Seç:" Component="DropDownTextValueProperties2" />
+			<RadzenDropDown TValue="int?" @bind-Value=@ItemData.SehirId Data=@(sehirList?.Where(a=>a.UlkeId==ItemData.UlkeId).ToList()) TextProperty="@nameof(Sehir.Ad)" ValueProperty="@nameof(Sehir.Id)" Style="width: 100%; max-width: 400px;" Name="DropDownTextValueProperties2" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6 mt-2">
+			<RadzenLabel Text="İlçe Seç:" Component="DropDownTextValueProperties3" />
+			<RadzenDropDown TValue="int?" @bind-Value=@ItemData.IlceId Data=@(ilceList?.Where(b=>b.SehirId==ItemData.SehirId).ToList()) TextProperty="@nameof(Ilce.Ad)" ValueProperty="@nameof(Ilce.Id)" Style="width: 100%; max-width: 400px;" Name="DropDownTextValueProperties3" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Temsilci Seç:" Component="DropDownTextValueProperties" />
+			<RadzenDropDown TValue="int?" @bind-Value=@ItemData.MusteriTemsilciId Data=@temsilciList ValueProperty="@nameof(MusteriTemsilci.Id)" Style="width: 100%; max-width: 400px;" Name="DropDownTextValueProperties">
+				<Template Context="temsilci">
+					@temsilci.Ad @temsilci.Soyad
+				</Template>
+			</RadzenDropDown>
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Yetkili:" Component="Yetkili" />
+			<RadzenTextBox @bind-Value="ItemData.Yetkili" Name="Yetkili" Placeholder="Yetkili" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6 rz-text-align-center" style="margin-top:30px;">
+			<RadzenCheckBox @bind-Value=@ItemData.Aktif Name="CheckBox1" ReadOnly="LookData" />
+			<RadzenLabel Text="Aktif:" Component="CheckBox1" />
+		</div>
+
+
+	</div>
+	<div style="display:flex;">
+		<div class="text-center mt-4">
+			<div class="button-container">
+				@if (LookData == false)
+				{
+					<RadzenButton Text="KAYDET" ButtonStyle="ButtonStyle.Primary" Icon="add_circle" Click="AddCustomer" style="background-color: #28a745; border-color: #28a745;" />
+					<RadzenButton Text="VAZGEÇ" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelCustomer" style="background-color: #dc3545; border-color: #dc3545;" />
+
+				}
+				else
+				{
+					<RadzenButton Text="KAPAT" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelCustomer" style="background-color: #dc3545; border-color: #dc3545;" />
+				}
+			</div>
+		</div>
+
+
+
+	</div>
+</div>
+
+
+
+
+
+
+
+
+@code {
+	[Parameter]
+	public Musteri ItemData { get; set; } = new();
+
+	[Parameter]
+	public bool LookData { get; set; } = false;
+
+
+
+
+
+
+
+
+	private async Task AddCustomer()
+	{
+		if (IsCustomerValid(ItemData))
+		{
+			if (ItemData.Id == 0)
+			{
+				ItemData = await MusteriService.AddCustomer(ItemData);
+			}
+			else if (ItemData.Id > 0)
+			{
+				ItemData = await MusteriService.UpdateCustomer(ItemData.Id, ItemData);
+
+			}
+
+
+
+
+		DialogService.Close(ItemData);
+		}
+		else
+		{
+
+			await DialogService.Alert("Geçersiz müşteri bilgileri", "Hata");
+		}
+
+
+	}
+
+
+	private async Task ViewCustomer()
+	{
+		DialogService.Close(LookData);
+	}
+
+
+
+	private async Task CancelCustomer()
+	{
+
+		DialogService.Close();
+
+
+	}
+
+	private bool IsCustomerValid(Musteri musteri)
+	{
+		return !string.IsNullOrEmpty(musteri.Ad) &&
+						!string.IsNullOrEmpty(musteri.Email) &&
+						!string.IsNullOrEmpty(musteri.TelNo) &&
+						!string.IsNullOrEmpty(musteri.Adres) &&
+						!string.IsNullOrEmpty(musteri.VergiDairesi) &&
+						!string.IsNullOrEmpty(musteri.VergiNo);
+
+	}
+
+
+
+	public List<Ulke>? ulkeList;
+	public List<Sehir>? sehirList;
+	public List<Ilce>? ilceList;
+	public List<MusteriTemsilci>? temsilciList;
+
+	protected override async Task OnInitializedAsync()
+	{
+		ulkeList = await UlkeService.GetAllCountry();
+		sehirList = await SehirService.GetAllCity();
+		ilceList = await IlceService.GetAllTown();
+		temsilciList = await MusteriTemsilciService.GetAktifMusteriTemsilci();
+	}
+
+
+
+}
+

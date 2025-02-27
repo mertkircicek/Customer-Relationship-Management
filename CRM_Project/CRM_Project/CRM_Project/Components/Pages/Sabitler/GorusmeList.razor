@@ -1,0 +1,105 @@
+﻿@page "/gorusme-list"
+
+
+<h3>GÖRÜŞME LİSTESİ</h3>
+<br />
+<div>
+	<RadzenButton Text="GÖRÜŞME EKLE" Style="background-color: orange;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;"
+				  ButtonStyle="ButtonStyle.Secondary" Click=@OpenOrder />
+</div>
+<br />
+<div style="padding: 20px; max-width: 100%; margin: 0 auto; overflow-x: hidden;">
+	@if (gorusmeler == null || gorusmeler.Count == 0)
+	{
+		<p>Hiç görüşme bulunamadı.</p>
+	}
+	else
+	{
+		<RadzenDataGrid @ref="MyDataGrid" AllowFiltering="false"
+						FilterPopupRenderMode="PopupRenderMode.OnDemand"
+						FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+						AllowSorting="false"
+						SelectionMode="DataGridSelectionMode.Single"
+						TItem="Gorusme"
+						Data="@gorusmeler"
+						Style="width: 100%; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+			<Columns>
+				<RadzenDataGridColumn TItem="Gorusme" Property="Musteri.Ad" Title="Müşteri" />
+				<RadzenDataGridColumn TItem="Gorusme" Property="YetkiliAd" Title="Yetkili Ad" />
+				<RadzenDataGridColumn TItem="Gorusme" Property="GorusmeTarih" Title="Görüşme Tarihi" />
+				<RadzenDataGridColumn TItem="Gorusme" Property="GorusmeNot" Title="Görüşme Notu" />
+				<RadzenDataGridColumn TItem="Gorusme" Property="RandevuTarih" Title="Randevu Tarihi" />
+				<RadzenDataGridColumn TItem="Gorusme" Title="İşlemler" Sortable="false" Filterable="false">
+					<Template Context="data">
+						<RadzenButton Icon="info" Style="margin-right: 5px; background-color:forestgreen; color:white;" Click="@(args => ViewGorusme(data))" />
+						<RadzenButton Icon="edit" Style="margin-right: 5px; color:white;" Click="@(args => UpdateGorusme(data))" />
+						<RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Click="@(args => DeleteGorusme(data))" />
+					</Template>
+				</RadzenDataGridColumn>
+			</Columns>
+		</RadzenDataGrid>
+	}
+</div>
+
+@code {
+	List<Gorusme>? gorusmeler;
+
+	RadzenDataGrid<Gorusme> MyDataGrid;
+
+	protected override async Task OnInitializedAsync()
+	{
+		gorusmeler = await GorusmeService.GetAllGorusme();
+	}
+
+
+
+	
+	async void ViewGorusme(Gorusme gorusme)
+	{
+		var LookGorusme = await DialogService.OpenAsync<GorusmeCardPage>("Görüşme İncele", new() { { "ItemData", gorusme }, { "LookData", true } });
+
+	}
+
+	
+	async void UpdateGorusme(Gorusme gorusme)
+	{
+		var EditGorusme = await DialogService.OpenAsync<GorusmeCardPage>("Görüşme Düzenle", new() { { "ItemData", gorusme } });
+		if (EditGorusme != null)
+		{
+			await MyDataGrid.Reload();
+		}
+
+
+	}
+
+
+	
+	async void DeleteGorusme(Gorusme gorusme)
+	{
+		await GorusmeService.DeleteGorusme(gorusme.Id);
+		gorusmeler.Remove(gorusme);
+		await MyDataGrid.Reload();
+
+		StateHasChanged();
+
+	}
+	public async Task OpenOrder()
+	{
+		Sehir item = new();
+		var newGorusme = await DialogService.OpenAsync<GorusmeCardPage>("Görüşme Ekle");
+		if (newGorusme != null)
+		{
+			gorusmeler.Add((Gorusme)newGorusme);
+			if (MyDataGrid != null)
+				await MyDataGrid.Reload();
+		}
+
+
+
+	}
+}

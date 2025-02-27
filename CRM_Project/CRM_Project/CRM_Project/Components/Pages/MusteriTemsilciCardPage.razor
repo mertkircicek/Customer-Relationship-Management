@@ -1,0 +1,124 @@
+﻿<div class="card p-4">
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="Ad:" Component="Ad" />
+			<RadzenTextBox @bind-Value="ItemData.Ad" Name="Ad" Placeholder="Ad" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Soyad:" Component="Soyad" />
+			<RadzenTextBox @bind-Value="ItemData.Soyad" Name="Soyad" Placeholder="Soyad" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Telefon No:" Component="TelNo" />
+			<RadzenMask Mask=" *(***) ***-**-**" CharacterPattern="[0-9]" Placeholder="0(000) 000-00-00" Name="TelNo" @bind-Value=@ItemData.TelNo
+						Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6 rz-text-align-center" style="margin-top:30px;">
+			<RadzenCheckBox @bind-Value=@ItemData.Aktif Name="CheckBox1" ReadOnly="LookData" />
+			<RadzenLabel Text="Aktif:" Component="CheckBox1" />
+		</div>
+		
+
+
+	</div>
+	<div style="display:flex;">
+		<div class="text-center mt-4">
+			<div class="button-container">
+				@if (LookData == false)
+				{
+					<RadzenButton Text="KAYDET" ButtonStyle="ButtonStyle.Primary" Icon="add_circle" Click="AddMusteriTemsilci" style="background-color: #28a745; border-color: #28a745;" />
+					<RadzenButton Text="VAZGEÇ" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelMusteriTemsilci" style="background-color: #dc3545; border-color: #dc3545;" />
+
+				}
+				else
+				{
+					<RadzenButton Text="KAPAT" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelMusteriTemsilci" style="background-color: #dc3545; border-color: #dc3545;" />
+				}
+			</div>
+		</div>
+
+
+
+	</div>
+</div>
+
+
+
+
+
+
+
+
+@code {
+	[Parameter]
+	public MusteriTemsilci ItemData { get; set; } = new();
+
+	[Parameter]
+	public bool LookData { get; set; } = false;
+
+
+
+
+
+
+
+
+	private async Task AddMusteriTemsilci()
+	{
+		if (IsCustomerValid(ItemData))
+		{
+			if (ItemData.Id == 0)
+			{
+				ItemData = await MusteriTemsilciService.AddMusteriTemsilci(ItemData);
+			}
+			else if (ItemData.Id > 0)
+			{
+				ItemData = await MusteriTemsilciService.UpdateMusteriTemsilci(ItemData.Id, ItemData);
+
+			}
+
+
+
+
+			DialogService.Close(ItemData);
+		}
+		else
+		{
+
+			await DialogService.Alert("Geçersiz müşteri bilgileri", "Hata");
+		}
+
+
+	}
+
+
+	private async Task ViewMusteriTemsilci()
+	{
+		DialogService.Close(LookData);
+	}
+
+
+
+	private async Task CancelMusteriTemsilci()
+	{
+
+		DialogService.Close();
+
+
+	}
+
+	private bool IsCustomerValid(MusteriTemsilci musteriTemsilci)
+	{
+		return !string.IsNullOrEmpty(musteriTemsilci.Ad) &&
+						!string.IsNullOrEmpty(musteriTemsilci.Soyad) &&
+						!string.IsNullOrEmpty(musteriTemsilci.TelNo) ;
+
+
+	}
+
+
+
+	
+
+
+}

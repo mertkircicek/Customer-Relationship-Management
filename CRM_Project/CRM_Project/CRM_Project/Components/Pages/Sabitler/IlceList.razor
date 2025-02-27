@@ -1,0 +1,98 @@
+﻿@page "/ilce-list"
+
+
+<h3>İLÇE LİSTESİ</h3>
+<br />
+<div>
+    <RadzenButton Text="İLÇE EKLE" Style="background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;"
+                  ButtonStyle="ButtonStyle.Secondary" Click=@OpenOrder />
+</div>
+<br />
+<div>
+    @if (ilceler == null || ilceler.Count == 0)
+    {
+        <p>Hiç ilçe bulunamadı.</p>
+    }
+    else
+    {
+        <RadzenDataGrid @ref="MyDataGrid" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                        AllowSorting="true" ColumnWidth="200px"
+                        SelectionMode="DataGridSelectionMode.Single" TItem="Ilce" Data="@ilceler">
+            <Columns>
+                <RadzenDataGridColumn TItem="Ilce" Property="Sehir.Ad" Title="Şehir" />
+                <RadzenDataGridColumn TItem="Ilce" Property="Ad" Title="İlçe Adı" />
+                <RadzenDataGridColumn TItem="Ilce" Property="PostaKod" Title="İlçe Posta Kodu" />
+                
+                <RadzenDataGridColumn TItem="Ilce" Title="İşlemler" Sortable="false" Filterable="false">
+                    <Template Context="data">
+                        <RadzenButton Icon="info" Style="margin-right: 10px ; background-color:forestgreen" Click="@(args => ViewTown(data))" />
+                        <RadzenButton Icon="edit" Style="margin-right: 10px" Click="@(args => UpdateTown(data))" />
+                        <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Click="@(args => DeleteTown(data))" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
+</div>
+@code {
+    private List<Ilce>? ilceler;
+
+    private RadzenDataGrid<Ilce>? MyDataGrid;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ilceler = await IlceService.GetAllTown();
+    }
+
+
+
+    //İlçeyi inceleme işlevi
+    async void ViewTown(Ilce ilce)
+    {
+        var LookTown = await DialogService.OpenAsync<IlceCardPage>("İlçe İncele", new() { { "ItemData", ilce }, { "LookData", true } });
+
+    }
+
+    // İlçeyi güncelleme işlevi
+    async void UpdateTown(Ilce ilce)
+    {
+        var EditTown = await DialogService.OpenAsync<IlceCardPage>("İlçe Düzenle", new() { { "ItemData", ilce } });
+        if (EditTown != null)
+        {
+            await MyDataGrid.Reload();
+        }
+
+
+    }
+
+
+    // İlçeyi silme işlevi
+    async void DeleteTown(Ilce ilce)
+    {
+        await IlceService.DeleteTown(ilce.Id);
+        ilceler.Remove(ilce);
+        await MyDataGrid.Reload();
+
+        StateHasChanged();
+
+    }
+    public async Task OpenOrder()
+    {
+        Ilce item = new();
+        var newTown = await DialogService.OpenAsync<IlceCardPage>("İlçe Ekle");
+        if (newTown != null)
+        {
+            ilceler.Add((Ilce)newTown);
+            if(MyDataGrid!=null)
+                await MyDataGrid.Reload();
+        }
+
+
+
+    }
+}

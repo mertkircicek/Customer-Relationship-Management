@@ -1,0 +1,146 @@
+﻿<div class="card p-4">
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="Müşteri Seç:" Component="DropDownTextValueProperties" />
+			<RadzenDropDown TValue="int" @bind-Value=@ItemData.MusteriId Data=@musteriList Change="() => OnChangeMusteri(ItemData.MusteriId)" TextProperty="@nameof(Musteri.Ad)" ValueProperty="@nameof(Musteri.Id)" Style="width: 100%; max-width: 400px;" Name="DropDownTextValueProperties" />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Yetkili: " Component="YetkiliAd" />
+			<RadzenTextBox @bind-Value="ItemData.YetkiliAd" Name="YetkiliAd" Placeholder="Yetkili Ad Soyad" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="Görüşme Tarih:" Component="DatePickerWithTime" />
+			<RadzenDatePicker @bind-Value=@ItemData.GorusmeTarih ShowTime="true" ShowSeconds="true" HoursStep="1.5" MinutesStep="5" SecondsStep="10" DateFormat="dd/MM/yyyy HH:mm" Name="DatePickerWithTime" ReadOnly=LookData />
+		</div>
+	</div>
+	<div>
+	<RadzenColumn Size="12" SizeMD="4">
+		<RadzenCard>
+			<RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Görüşme Not</RadzenText>
+			<RadzenTextArea @bind-value=@ItemData.GorusmeNot oninput="event.target.style.height = Math.max(event.target.clientHeight, event.target.scrollHeight) + 'px';" Change=@(args => OnChange(args, "Auto-resize")) Style="width: 100%" aria-label="Auto-resize" />
+		</RadzenCard>
+	</RadzenColumn>
+	</div>
+	<div>
+		<RadzenColumn Size="12" SizeMD="4">
+			<RadzenCard>
+				<RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Sonraki Görüşme Not</RadzenText>
+				<RadzenTextArea @bind-value=@ItemData.SonrakiGorusmeNot oninput ="event.target.style.height = Math.max(event.target.clientHeight, event.target.scrollHeight) + 'px';" Change=@(args => OnChange(args, "Auto-resize")) Style="width: 100%" aria-label="Auto-resize" />
+			</RadzenCard>
+		</RadzenColumn>
+	</div>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="Randevu Tarih Seç:" Component="DatePickerWithTime" />
+			<RadzenDatePicker @bind-Value=@ItemData.RandevuTarih ShowTime="true" ShowSeconds="true" HoursStep="1.5" MinutesStep="5" SecondsStep="10" DateFormat="dd/MM/yyyy HH:mm" Name="DatePickerWithTime" ReadOnly=LookData />
+		</div>
+	</div>
+
+
+		
+
+	<div style="display:flex;">
+		<div class="text-center mt-4">
+			<div class="button-container">
+				@if (LookData == false)
+				{
+					<RadzenButton Text="KAYDET" ButtonStyle="ButtonStyle.Primary" Icon="add_circle" Click="AddGorusme" style="background-color: #28a745; border-color: #28a745;" />
+					<RadzenButton Text="VAZGEÇ" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelGorusme" style="background-color: #dc3545; border-color: #dc3545;" />
+
+				}
+				else
+				{
+					<RadzenButton Text="KAPAT" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelGorusme" style="background-color: #dc3545; border-color: #dc3545;" />
+				}
+			</div>
+		</div>
+
+
+
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public Gorusme ItemData { get; set; } = new();
+
+	[Parameter]
+	public bool LookData { get; set; } = false;
+
+
+
+	private async Task AddGorusme()
+	{
+		if (IsGorusmeValid(ItemData))
+		{
+			if (ItemData.Id == 0)
+			{
+				ItemData = await GorusmeService.AddGorusme(ItemData);
+			}
+			else if (ItemData.Id > 0)
+			{
+				ItemData = await GorusmeService.UpdateGorusme(ItemData.Id, ItemData);
+
+			}
+
+
+
+
+			DialogService.Close(ItemData);
+		}
+		else
+		{
+
+			await DialogService.Alert("Geçersiz görüşme bilgileri", "Hata");
+		}
+
+
+	}
+
+
+	private async Task ViewGorusme()
+	{
+		DialogService.Close(LookData);
+	}
+
+
+
+	private async Task CancelGorusme()
+	{
+
+		DialogService.Close();
+
+
+	}
+
+	private bool IsGorusmeValid(Gorusme gorusme)
+	{
+		return !string.IsNullOrEmpty(gorusme.GorusmeNot) ;
+
+	}
+
+
+	public List<Musteri>? musteriList;
+
+	protected override async Task OnInitializedAsync()
+	{
+		musteriList = await MusteriService.GetAllCustomer();
+	}
+
+	void OnChange(string value, string name)
+	{
+		
+	}
+
+	void OnChangeMusteri(int MusteriId)
+	{
+		var singleMusteri = musteriList.Where(a => a.Id == MusteriId).FirstOrDefault();
+		if (singleMusteri != null)
+		{
+			ItemData.YetkiliAd = singleMusteri.Yetkili;
+		}
+	}
+
+}

@@ -1,0 +1,128 @@
+﻿@page "/musteri-list"
+
+@rendermode InteractiveServer
+
+
+
+<h3>MÜŞTERİ LİSTESİ</h3>
+
+<br />
+
+<!-- Müşteri Ekle Butonu -->
+<div>
+    <RadzenButton Text="MÜŞTERİ EKLE" Style="background-color: #1c2991;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;" 
+    ButtonStyle="ButtonStyle.Secondary" Click=@OpenOrder />
+</div>
+
+
+
+<br/>   
+<!-- Müşteri Listesi -->
+<div style="padding: 20px; max-width: 100%; margin: 0 auto; overflow-x: auto;">
+    @if (customers == null || customers.Count == 0)
+    {
+        <p>Hiç müşteri bulunamadı.</p>
+    }
+    else
+    {
+        <RadzenDataGrid @ref="MyDataGrid"
+                        AllowFiltering="false"
+                        FilterPopupRenderMode="PopupRenderMode.OnDemand"
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                        AllowSorting="false"
+                        SelectionMode="DataGridSelectionMode.Single"
+                        TItem="Musteri"
+                        Data="@customers"
+                        Style="width: 100%; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; overflow-x: auto;">
+            <Columns>
+                <RadzenDataGridColumn TItem="Musteri" Property="Ad" Title="Ad" MinWidth="100px" />
+                <RadzenDataGridColumn TItem="Musteri" Property="Email" Title="Email" MinWidth="120px" />
+                <RadzenDataGridColumn TItem="Musteri" Property="VergiDairesi" Title="Vergi Dairesi" MinWidth="150px" />
+                <RadzenDataGridColumn TItem="Musteri" Property="Sehir.Ad" Title="Şehir" MinWidth="150px" />
+                <RadzenDataGridColumn TItem="Musteri" Property="Ilce.Ad" Title="İlçe" MinWidth="150px" />
+                <RadzenDataGridColumn TItem="Musteri" Property="Yetkili" Title="Yetkili" MinWidth="150px" />
+                <RadzenDataGridColumn TItem="Musteri" Property="Aktif" Title="Aktiflik" MinWidth="150px">
+                    <Template Context="colContext">
+                        <RadzenCheckBox @bind-Value="colContext.Aktif" ReadOnly="true" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Musteri" Title="İşlemler" Sortable="false" Filterable="false" MinWidth="180px">
+                    <Template Context="data">
+                        <RadzenButton Icon="info" Style="margin-right: 5px; background-color: forestgreen; color: white;" Click="@(args => ViewCustomer(data))" />
+                        <RadzenButton Icon="edit" Style="margin-right: 5px; color: white;" Click="@(args => UpdateCustomer(data))" />
+                        <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Click="@(args => DeleteCustomer(data))" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
+</div>
+
+
+
+@code {
+    private List<Musteri>? customers;
+
+    private RadzenDataGrid<Musteri>? MyDataGrid;
+    DialogOptions dialogOptions = new() { Style = "width: calc(100vw - 100px); height: calc(100vh - 50px); min - height:500px" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers = await MusteriService.GetAllCustomer();
+    }
+
+
+
+    // Müşteriyi inceleme işlevi
+    async void ViewCustomer(Musteri musteri)
+    {
+        var LookCustomer = await DialogService.OpenAsync<DialogCardPage>("Müşteri İncele", new() { { "ItemData", musteri }, { "LookData", true } }, dialogOptions);
+       
+    }
+
+    // Müşteriyi güncelleme işlevi
+    async void UpdateCustomer(Musteri musteri)
+    {
+        var EditCustomer = await DialogService.OpenAsync<DialogCardPage>("Müşteri Düzenle", new() { { "ItemData", musteri } }, dialogOptions);
+        if (EditCustomer != null)
+        {
+           await MyDataGrid.Reload();
+        }
+            
+        
+    }
+
+
+    // Müşteriyi silme işlevi
+    async void DeleteCustomer(Musteri musteri)
+    {
+        await MusteriService.DeleteCustomer(musteri.Id);
+        customers.Remove(musteri);
+        await MyDataGrid.Reload();
+
+        StateHasChanged();
+
+    }
+    public async Task OpenOrder()
+    {
+        Musteri item = new();
+        var newCustomer=await DialogService.OpenAsync<DialogCardPage>("Müşteri Ekle");
+        if (newCustomer != null)
+        {
+            customers.Add((Musteri)newCustomer);
+            if(MyDataGrid!=null)
+                await MyDataGrid.Reload();
+        }
+
+
+       
+    }
+}
+
+
+

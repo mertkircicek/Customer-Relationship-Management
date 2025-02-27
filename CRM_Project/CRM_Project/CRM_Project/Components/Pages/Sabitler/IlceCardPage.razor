@@ -1,0 +1,109 @@
+﻿<div class="card p-4">
+	<h4>Yeni İlçe Ekle</h4>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="İlçe Adı:" Component="Ad" />
+			<RadzenTextBox @bind-Value="ItemData.Ad" Name="Ad" Placeholder="İlçe Adı" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="İlçe Posta Kodu: " Component="PostaKod" />
+			<RadzenTextBox @bind-Value="ItemData.PostaKod" Name="PostaKod" Placeholder="Posta Kodu" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="Şehir Seç:" Component="DropDownTextValueProperties" />
+			<RadzenDropDown TValue="int?" @bind-Value=@ItemData.SehirId Data=@cityNames TextProperty="@nameof(Sehir.Ad)" ValueProperty="@nameof(Ulke.Id)" Style="width: 100%; max-width: 400px;" Name="DropDownTextValueProperties" />
+		</div>
+	</div>
+	<div style="display:flex;">
+		<div class="text-center mt-4">
+			<div class="button-container">
+				@if (LookData == false)
+				{
+					<RadzenButton Text="KAYDET" ButtonStyle="ButtonStyle.Primary" Icon="add_circle" Click="AddTown" style="background-color: #28a745; border-color: #28a745;" />
+					<RadzenButton Text="VAZGEÇ" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelTown" style="background-color: #dc3545; border-color: #dc3545;" />
+
+				}
+				else
+				{
+					<RadzenButton Text="KAPAT" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelTown" style="background-color: #dc3545; border-color: #dc3545;" />
+				}
+			</div>
+		</div>
+     </div>
+
+
+	</div>
+</div>
+
+
+
+@code {
+	[Parameter]
+	public Ilce ItemData { get; set; } = new();
+
+	[Parameter]
+	public bool LookData { get; set; } = false;
+
+
+
+	private async Task AddTown()
+	{
+		if (IsTownValid(ItemData))
+		{
+			if (ItemData.Id == 0)
+			{
+				ItemData = await IlceService.AddTown(ItemData);
+			}
+			else if (ItemData.Id > 0)
+			{
+				ItemData = await IlceService.UpdateTown(ItemData.Id, ItemData);
+
+			}
+
+
+
+
+			DialogService.Close(ItemData);
+		}
+		else
+		{
+
+			await DialogService.Alert("Geçersiz ilçe bilgileri", "Hata");
+		}
+
+
+	}
+
+
+	private async Task ViewTown()
+	{
+		DialogService.Close(LookData);
+	}
+
+
+
+	private async Task CancelTown()
+	{
+
+		DialogService.Close();
+
+
+	}
+
+	private bool IsTownValid(Ilce ilce)
+	{
+		return !string.IsNullOrEmpty(ilce.Ad) &&
+						!string.IsNullOrEmpty(ilce.PostaKod);
+
+	}
+
+	public List<Sehir>? cityNames;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await base.OnInitializedAsync();
+
+		cityNames = await SehirService.GetAllCity();
+	}
+}

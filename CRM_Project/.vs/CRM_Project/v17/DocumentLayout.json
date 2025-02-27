@@ -1,0 +1,152 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|c:\\users\\mert k\u0131r\u00E7i\u00E7ek\\documents\\staj proje\\crm_project\\crm_project\\crm_project\\components\\pages\\sabitler\\gorusmelist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|solutionrelative:crm_project\\crm_project\\components\\pages\\sabitler\\gorusmelist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|c:\\users\\mert k\u0131r\u00E7i\u00E7ek\\documents\\staj proje\\crm_project\\crm_project\\crm_project\\components\\pages\\customerlist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|solutionrelative:crm_project\\crm_project\\components\\pages\\customerlist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|c:\\users\\mert k\u0131r\u00E7i\u00E7ek\\documents\\staj proje\\crm_project\\crm_project\\crm_project\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|solutionrelative:crm_project\\crm_project\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E995BAB-D1F1-4248-A600-1EB78A5703C7}|CRM_Project.Shared\\CRM_Project.Shared.csproj|c:\\users\\mert k\u0131r\u00E7i\u00E7ek\\documents\\staj proje\\crm_project\\crm_project.shared\\migrations\\20240815120655_musteriaktif.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E995BAB-D1F1-4248-A600-1EB78A5703C7}|CRM_Project.Shared\\CRM_Project.Shared.csproj|solutionrelative:crm_project.shared\\migrations\\20240815120655_musteriaktif.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|c:\\users\\mert k\u0131r\u00E7i\u00E7ek\\documents\\staj proje\\crm_project\\crm_project\\crm_project\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|solutionrelative:crm_project\\crm_project\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|c:\\users\\mert k\u0131r\u00E7i\u00E7ek\\documents\\staj proje\\crm_project\\crm_project\\crm_project\\components\\pages\\sabitler\\gorusmecardpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|solutionrelative:crm_project\\crm_project\\components\\pages\\sabitler\\gorusmecardpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|c:\\users\\mert k\u0131r\u00E7i\u00E7ek\\documents\\staj proje\\crm_project\\crm_project\\crm_project\\components\\pages\\dialogcardpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|solutionrelative:crm_project\\crm_project\\components\\pages\\dialogcardpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|c:\\users\\mert k\u0131r\u00E7i\u00E7ek\\documents\\staj proje\\crm_project\\crm_project\\crm_project\\components\\pages\\sabitler\\sehirlist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51AEECC1-0923-4E45-A679-E34F557A8A5D}|CRM_Project\\CRM_Project\\CRM_Project.csproj|solutionrelative:crm_project\\crm_project\\components\\pages\\sabitler\\sehirlist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "20240815120655_MusteriAktif.cs",
+              "DocumentMoniker": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project.Shared\\Migrations\\20240815120655_MusteriAktif.cs",
+              "RelativeDocumentMoniker": "CRM_Project.Shared\\Migrations\\20240815120655_MusteriAktif.cs",
+              "ToolTip": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project.Shared\\Migrations\\20240815120655_MusteriAktif.cs",
+              "RelativeToolTip": "CRM_Project.Shared\\Migrations\\20240815120655_MusteriAktif.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-18T19:13:41.994Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "CRM_Project\\CRM_Project\\Components\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "CRM_Project\\CRM_Project\\Components\\Layout\\MainLayout.razor",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-16T14:12:13.884Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "CRM_Project\\CRM_Project\\Components\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "CRM_Project\\CRM_Project\\Components\\Layout\\NavMenu.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-16T13:37:55.858Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CustomerList.razor",
+              "DocumentMoniker": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Pages\\CustomerList.razor",
+              "RelativeDocumentMoniker": "CRM_Project\\CRM_Project\\Components\\Pages\\CustomerList.razor",
+              "ToolTip": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Pages\\CustomerList.razor",
+              "RelativeToolTip": "CRM_Project\\CRM_Project\\Components\\Pages\\CustomerList.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-16T13:03:30.973Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GorusmeList.razor",
+              "DocumentMoniker": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\GorusmeList.razor",
+              "RelativeDocumentMoniker": "CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\GorusmeList.razor",
+              "ToolTip": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\GorusmeList.razor",
+              "RelativeToolTip": "CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\GorusmeList.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC4AAAAGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-16T08:53:07.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GorusmeCardPage.razor",
+              "DocumentMoniker": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\GorusmeCardPage.razor",
+              "RelativeDocumentMoniker": "CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\GorusmeCardPage.razor",
+              "ToolTip": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\GorusmeCardPage.razor",
+              "RelativeToolTip": "CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\GorusmeCardPage.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAABtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-16T08:52:20.292Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SehirList.razor",
+              "DocumentMoniker": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\SehirList.razor",
+              "RelativeDocumentMoniker": "CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\SehirList.razor",
+              "ToolTip": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\SehirList.razor",
+              "RelativeToolTip": "CRM_Project\\CRM_Project\\Components\\Pages\\Sabitler\\SehirList.razor",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAA8AAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-16T08:52:25.479Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DialogCardPage.razor",
+              "DocumentMoniker": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Pages\\DialogCardPage.razor",
+              "RelativeDocumentMoniker": "CRM_Project\\CRM_Project\\Components\\Pages\\DialogCardPage.razor",
+              "ToolTip": "C:\\Users\\Mert K\u0131r\u00E7i\u00E7ek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\Components\\Pages\\DialogCardPage.razor",
+              "RelativeToolTip": "CRM_Project\\CRM_Project\\Components\\Pages\\DialogCardPage.razor",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAAwDcAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-16T11:56:18.756Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

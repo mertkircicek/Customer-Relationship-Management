@@ -1,0 +1,114 @@
+﻿@page "/musteriTemsilci-list"
+
+@rendermode InteractiveServer
+
+
+
+<h3>MÜŞTERİ TEMSİLCİ LİSTESİ</h3>
+
+<br />
+
+<!-- Müşteri Temsilci Ekle Butonu -->
+<div>
+    <RadzenButton Text="MÜŞTERİ TEMSİLCİ EKLE" Style="background-color: #1c2991;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;"
+                  ButtonStyle="ButtonStyle.Secondary" Click=@OpenOrder />
+</div>
+
+
+
+<br />
+<!-- Müşteri Listesi -->
+<div>
+    @if (temsilciler == null || temsilciler.Count == 0)
+    {
+        <p>Hiç müşteri bulunamadı.</p>
+    }
+    else
+    {
+        <RadzenDataGrid @ref="MyDataGrid" AllowFiltering="false" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                        AllowSorting="false"
+                        SelectionMode="DataGridSelectionMode.Single" TItem="MusteriTemsilci" Data="@temsilciler">
+            <Columns>
+                <RadzenDataGridColumn TItem="MusteriTemsilci" Property="Ad" Title="Ad" MinWidth="100px" />
+                <RadzenDataGridColumn TItem="MusteriTemsilci" Property="Soyad" Title="Soyad" MinWidth="120px" />
+                <RadzenDataGridColumn TItem="MusteriTemsilci" Property="TelNo" Title="Telefon No" MinWidth="100px" />               
+                <RadzenDataGridColumn TItem="MusteriTemsilci" Property="Aktif" Title="Aktiflik" MinWidth="40px">
+                    <Template Context="colContext">
+                        <RadzenCheckBox @bind-Value=@colContext.Aktif ReadOnly="true" />
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="MusteriTemsilci" Title="İşlemler" Sortable="false" Filterable="false" MinWidth="120px">
+                    <Template Context="data">
+                        <RadzenButton Icon="info" Style="margin-right: 10px ; background-color:forestgreen" Click="@(args => ViewMusteriTemsilci(data))" />
+                        <RadzenButton Icon="edit" Style="margin-right: 10px" Click="@(args => UpdateMusteriTemsilci(data))" />
+                        <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Click="@(args => UpdateMusteriTemsilci(data))" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
+</div>
+@code {
+    private List<MusteriTemsilci>? temsilciler;
+
+    private RadzenDataGrid<MusteriTemsilci>? MyDataGrid;
+    DialogOptions dialogOptions = new() { Style = "width: calc(100vw - 100px); height: calc(100vh - 50px); min - height:500px" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        temsilciler = await MusteriTemsilciService.GetAllMusteriTemsilci();
+    }
+
+
+
+    // Müşteriyi inceleme işlevi
+    async void ViewMusteriTemsilci(MusteriTemsilci musteriTemsilci)
+    {
+        var LookMusteriTemsilci = await DialogService.OpenAsync<MusteriTemsilciCardPage>("Müşteri Temsilci İncele", new() { { "ItemData", musteriTemsilci }, { "LookData", true } }, dialogOptions);
+
+    }
+
+    // Müşteriyi güncelleme işlevi
+    async void UpdateMusteriTemsilci(MusteriTemsilci musteriTemsilci)
+    {
+        var EditMusteriTemsilci = await DialogService.OpenAsync<MusteriTemsilciCardPage>("Müşteri Temsilci Düzenle", new() { { "ItemData", musteriTemsilci } }, dialogOptions);
+        if (EditMusteriTemsilci != null)
+        {
+            await MyDataGrid.Reload();
+        }
+
+
+    }
+
+
+    // Müşteriyi silme işlevi
+    async void DeleteMusteriTemsilci(MusteriTemsilci musteriTemsilci)
+    {
+        await MusteriTemsilciService.DeleteMusteriTemsilci(musteriTemsilci.Id);
+        temsilciler.Remove(musteriTemsilci);
+        await MyDataGrid.Reload();
+
+        StateHasChanged();
+
+    }
+    public async Task OpenOrder()
+    {
+        Musteri item = new();
+        var newMusteriTemsilci = await DialogService.OpenAsync<MusteriTemsilciCardPage>("Müşteri Temsilci Ekle");
+        if (newMusteriTemsilci != null)
+        {
+            temsilciler.Add((MusteriTemsilci)newMusteriTemsilci);
+            if (MyDataGrid != null)
+                await MyDataGrid.Reload();
+        }
+
+
+
+    }
+}

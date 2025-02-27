@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Mert Kırçiçek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\CRM_Project.bundle.scp.css",
+      "PackagePath": "staticwebassets\\CRM_Project.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\Mert Kırçiçek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\Mert Kırçiçek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\wwwroot\\assets\\Image\\promopazar.JPG",
+      "PackagePath": "staticwebassets\\assets\\Image\\promopazar.JPG"
+    },
+    {
+      "Id": "C:\\Users\\Mert Kırçiçek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Mert Kırçiçek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Mert Kırçiçek\\Documents\\Staj Proje\\CRM_Project\\CRM_Project\\CRM_Project\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.CRM_Project.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.CRM_Project.props",
+      "PackagePath": "build\\CRM_Project.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.CRM_Project.props",
+      "PackagePath": "buildMultiTargeting\\CRM_Project.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.CRM_Project.props",
+      "PackagePath": "buildTransitive\\CRM_Project.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

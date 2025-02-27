@@ -1,0 +1,115 @@
+﻿<div class="card p-4">
+	<h4>Yeni Şehir Ekle</h4>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="Şehir Adı:" Component="Ad" />
+			<RadzenTextBox @bind-Value="ItemData.Ad" Name="Ad" Placeholder="Ad" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+			<RadzenLabel Text="Şehir Telefon Kodu: " Component="TelefonKod" />
+			<RadzenTextBox @bind-Value="ItemData.TelefonKod" Name="TelefonKod" Placeholder="Şehir Telefon Kodu" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			<RadzenLabel Text="Şehir Plaka Kodu:" Component="Plaka" />
+			<RadzenTextBox @bind-Value="ItemData.Plaka" Name="Plaka" Placeholder="Şehir Plaka" Style="width: 100%;" ReadOnly=LookData />
+		</div>
+		<div class="col-md-6">
+				<RadzenLabel Text="Ülke Seç:" Component="DropDownTextValueProperties" />
+			<RadzenDropDown TValue="int?" @bind-Value=@ItemData.UlkeId Data=@sehirList TextProperty="@nameof(Ulke.Ad)" ValueProperty="@nameof(Ulke.Id)" Style="width: 100%; max-width: 400px;" Name="DropDownTextValueProperties" />
+        </div>
+	</div>
+	
+	<div style="display:flex;">
+		<div class="text-center mt-4">
+			<div class="button-container">
+				@if (LookData == false)
+				{
+					<RadzenButton Text="KAYDET" ButtonStyle="ButtonStyle.Primary" Icon="add_circle" Click="AddCity" style="background-color: #28a745; border-color: #28a745;" />
+					<RadzenButton Text="VAZGEÇ" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelCity" style="background-color: #dc3545; border-color: #dc3545;" />
+
+				}
+				else
+				{
+					<RadzenButton Text="KAPAT" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Click="CancelCity" style="background-color: #dc3545; border-color: #dc3545;" />
+				}
+			</div>
+		</div>
+
+
+
+	</div>
+</div>
+
+
+
+@code {
+	[Parameter]
+	public Sehir ItemData { get; set; } = new();
+
+	[Parameter]
+	public bool LookData { get; set; } = false;
+
+
+
+	private async Task AddCity()
+	{
+		if (IsCityValid(ItemData))
+		{
+			if (ItemData.Id == 0)
+			{
+				ItemData = await SehirService.AddCity(ItemData);
+			}
+			else if (ItemData.Id > 0)
+			{
+				ItemData = await SehirService.UpdateCity(ItemData.Id, ItemData);
+
+			}
+
+
+
+
+			DialogService.Close(ItemData);
+		}
+		else
+		{
+
+			await DialogService.Alert("Geçersiz şehir bilgileri", "Hata");
+		}
+
+
+	}
+
+
+	private async Task ViewCity()
+	{
+		DialogService.Close(LookData);
+	}
+
+
+
+	private async Task CancelCity()
+	{
+
+		DialogService.Close();
+
+
+	}
+
+	private bool IsCityValid(Sehir sehir)
+	{
+		return !string.IsNullOrEmpty(sehir.Ad) &&
+						!string.IsNullOrEmpty(sehir.TelefonKod) &&
+						!string.IsNullOrEmpty(sehir.Plaka);
+
+	}
+
+ 
+	public List<Ulke>? sehirList;
+
+	protected override async Task OnInitializedAsync()
+	{
+		sehirList = await UlkeService.GetAllCountry();
+	}
+}

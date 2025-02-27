@@ -1,0 +1,98 @@
+﻿@page "/sehir-list"
+
+
+<h3>ŞEHİR LİSTESİ</h3>
+<br />
+<div>
+	<RadzenButton Text="ŞEHİR EKLE" Style="background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;"
+				  ButtonStyle="ButtonStyle.Secondary" Click=@OpenOrder />
+</div>
+<br />
+<div>
+	@if (sehirler == null || sehirler.Count == 0)
+	{
+		<p>Hiç şehir bulunamadı.</p>
+	}
+	else
+	{
+		<RadzenDataGrid @ref="MyDataGrid" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+						AllowSorting="true" ColumnWidth="200px"
+						SelectionMode="DataGridSelectionMode.Single" TItem="Sehir" Data="@sehirler">
+			<Columns>
+				<RadzenDataGridColumn TItem="Sehir" Property="Ulke.Ad" Title="Ülke Adı" />
+				<RadzenDataGridColumn TItem="Sehir" Property="Ad" Title="Şehir Adı" />
+				<RadzenDataGridColumn TItem="Sehir" Property="TelefonKod" Title="Telefon Kodu" />
+				<RadzenDataGridColumn TItem="Sehir" Property="Plaka" Title="Şehir Plakası" />
+				<RadzenDataGridColumn TItem="Sehir" Title="İşlemler" Sortable="false" Filterable="false">
+					<Template Context="data">
+						<RadzenButton Icon="info" Style="margin-right: 10px ; background-color:forestgreen" Click="@(args => ViewCity(data))" />
+						<RadzenButton Icon="edit" Style="margin-right: 10px" Click="@(args => UpdateCity(data))" />
+						<RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Click="@(args => DeleteCity(data))" />
+					</Template>
+				</RadzenDataGridColumn>
+			</Columns>
+		</RadzenDataGrid>
+	}
+</div>
+@code {
+	List<Sehir> sehirler;
+
+	RadzenDataGrid<Sehir> MyDataGrid;
+
+	protected override async Task OnInitializedAsync()
+	{
+		sehirler = await SehirService.GetAllCity();
+	}
+
+
+
+	//Şehir inceleme işlevi
+	async void ViewCity(Sehir sehir)
+	{
+		var LookCity = await DialogService.OpenAsync<SehirCardPage>("Şehir İncele", new() { { "ItemData", sehir }, { "LookData", true } });
+
+	}
+
+	// Şehir güncelleme işlevi
+	async void UpdateCity(Sehir sehir)
+	{
+		var EditCity = await DialogService.OpenAsync<SehirCardPage>("Şehir Düzenle", new() { { "ItemData", sehir } });
+		if (EditCity != null)
+		{
+			await MyDataGrid.Reload();
+		}
+
+
+	}
+
+
+	// Şehir silme işlevi
+	async void DeleteCity(Sehir sehir)
+	{
+		await SehirService.DeleteCity(sehir.Id);
+		sehirler.Remove(sehir);
+		await MyDataGrid.Reload();
+
+		StateHasChanged();
+
+	}
+	public async Task OpenOrder()
+	{
+		Sehir item = new();
+		var newCity = await DialogService.OpenAsync<SehirCardPage>("Şehir Ekle");
+		if (newCity != null)
+		{
+			sehirler.Add((Sehir)newCity);
+			if (MyDataGrid !=null)
+				await MyDataGrid.Reload();
+		}
+
+
+
+	}
+}

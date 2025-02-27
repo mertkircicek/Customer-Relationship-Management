@@ -1,0 +1,97 @@
+﻿@page "/ulke-list"
+
+
+<h3>ÜLKE LİSTESİ</h3>
+<br />
+<div>
+	<RadzenButton Text="ÜLKE EKLE" Style="background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;"
+				  ButtonStyle="ButtonStyle.Secondary" Click=@OpenOrder />
+</div>
+<br />
+<div>
+	@if (ulkeler == null || ulkeler.Count == 0)
+	{
+		<p>Hiç ülke bulunamadı.</p>
+	}
+	else
+	{
+		<RadzenDataGrid @ref="MyDataGrid" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+						AllowSorting="true" ColumnWidth="200px"
+						SelectionMode="DataGridSelectionMode.Single" TItem="Ulke" Data="@ulkeler">
+			<Columns>
+				<RadzenDataGridColumn TItem="Ulke" Property="Ad" Title="Ülke Adı" />
+				<RadzenDataGridColumn TItem="Ulke" Property="Kod" Title="Ülke Kodu" />
+				<RadzenDataGridColumn TItem="Ulke" Property="AlanKod" Title="Alan kodu" />
+				<RadzenDataGridColumn TItem="Ulke" Title="İşlemler" Sortable="false" Filterable="false">
+					<Template Context="data">
+						<RadzenButton Icon="info" Style="margin-right: 10px ; background-color:forestgreen" Click="@(args => ViewCountry(data))" />
+						<RadzenButton Icon="edit" Style="margin-right: 10px" Click="@(args => UpdateCountry(data))" />
+						<RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Click="@(args => DeleteCountry(data))" />
+					</Template>
+				</RadzenDataGridColumn>
+			</Columns>
+		</RadzenDataGrid>
+	}
+</div>
+@code {
+	private List<Ulke>? ulkeler;
+
+	private RadzenDataGrid<Ulke>? MyDataGrid;
+
+	protected override async Task OnInitializedAsync()
+	{
+		ulkeler = await UlkeService.GetAllCountry();
+	}
+
+
+
+	//Ülkeyi inceleme işlevi
+	async void ViewCountry(Ulke ulke)
+	{
+		var LookCountry = await DialogService.OpenAsync<UlkeCardPage>("Ülke İncele", new() { { "ItemData", ulke }, { "LookData", true } });
+
+	}
+
+	// Ülkeyi güncelleme işlevi
+	async void UpdateCountry(Ulke ulke)
+	{
+		var EditCountry = await DialogService.OpenAsync<UlkeCardPage>("Ülke Düzenle", new() { { "ItemData", ulke } });
+		if (EditCountry != null)
+		{
+			await MyDataGrid.Reload();
+		}
+
+
+	}
+
+
+	// Ülkeyi silme işlevi
+	async void DeleteCountry(Ulke ulke)
+	{
+		await UlkeService.DeleteCountry(ulke.Id);
+		ulkeler.Remove(ulke);
+		await MyDataGrid.Reload();
+
+		StateHasChanged();
+
+	}
+	public async Task OpenOrder()
+	{
+		Ulke item = new();
+		var newCountry = await DialogService.OpenAsync<UlkeCardPage>("Ülke Ekle");
+		if (newCountry != null)
+		{
+			ulkeler.Add((Ulke)newCountry);
+			if (MyDataGrid != null)
+				await MyDataGrid.Reload();
+		}
+
+
+
+	}
+}

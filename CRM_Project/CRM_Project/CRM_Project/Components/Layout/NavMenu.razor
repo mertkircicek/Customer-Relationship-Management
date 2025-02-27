@@ -1,0 +1,64 @@
+﻿<HeadContent>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</HeadContent>
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">MÜŞTERİ İLİŞKİLERİ</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Ana Sayfa
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="musteri-list">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Müşteriler
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="#" onclick="document.getElementById('regionSubMenu').classList.toggle('d-none')">
+                <i class="fa-solid fa-earth-americas"></i>
+                <span class="bi bi-geo-alt-fill" aria-hidden="true"></span> Bölgeler
+            </NavLink>
+        </div>
+        <div id="regionSubMenu" class="ms-3 d-none">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="ulke-list">
+                    <i class="fa-solid fa-arrow-right" style="color: #ffffff;"></i>
+                    <span class="bi bi-flag" aria-hidden="true"></span> Ülkeler
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="sehir-list">
+                    <i class="fa-solid fa-arrow-right" style="color: #ffffff;"></i>
+                    <span class="bi bi-buildings" aria-hidden="true"></span> Şehirler
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="ilce-list">
+                    <i class="fa-solid fa-arrow-right" style="color: #ffffff;"></i>
+                    <span class="bi bi-map" aria-hidden="true"></span> İlçeler
+                </NavLink>
+            </div>
+        </div>
+       
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="musteriTemsilci-list">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Müşteri Temsilciler
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="gorusme-list">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Görüşmeler
+            </NavLink>
+        </div>
+    </nav>
+</div>
